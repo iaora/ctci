@@ -6,9 +6,9 @@
 
 public class Pr4{
     public static void main(String[] args){
-        String[][] board = {{"X", "O", "X"},
-                          {"X", "O", "O"},
-                          {"X", "X", "O"}};
+        String[][] board = {{"O", "O", "X"},
+                          {"X", "X", "O"},
+                          {"X", "X", "X"}};
 
         System.out.println(bruteForce(board));
                           
@@ -21,19 +21,31 @@ public class Pr4{
             return true;
 
         // check diagonals
-        if(board[0][0].equals(board[1][1])
-                && board[1][1].equals(board[2][2]))
-            return true;
-        if(board[0][2].equals(board[1][1])
-                && board[1][1].equals(board[2][0]))
-            return true;
-
-
-        return false;
-
+        return checkDiag(board);
     }
 
-    private boolean checkRows(String[][] board){
+    private static boolean checkDiag(String[][] board){
+        // top left-> bottom right
+        int count = 0;
+        for(int i = 0; i < board.length-1; i++){
+            if(board[i][i] == board[i+1][i+1])
+                count++;
+            if(count == board.length-1)
+                return true;
+        }
+
+        // top right --> bottom left
+        count = 0;
+        for(int i = 0; i < board.length-1; i++){
+            if(board[i][board.length-1-i] == board[i+1][board.length-2-i])
+                count++;
+            if(count == board.length-1)
+                return true;
+        }
+        return false;
+    }
+
+    private static boolean checkRows(String[][] board){
         int count = 0;
         for(String[] row : board){
             for(int i = 0; i < row.length-1; i++){
@@ -47,7 +59,7 @@ public class Pr4{
         return false;
     }
 
-    private boolean checkCols(String[][] board){
+    private static boolean checkCols(String[][] board){
         int count = 0;
         for(int col = 0; col < board[0].length; col++){
             for(int row = 0; row < board.length-1; row++){
