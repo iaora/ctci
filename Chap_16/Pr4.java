@@ -1,12 +1,14 @@
 /*
  * Tic Tac Win: Design an algorithm to figure out if someone has won a game of tic tac toe
+ *
+ * Assumptions: board can by NxN
  */
 
 public class Pr4{
     public static void main(String[] args){
         String[][] board = {{"X", "O", "X"},
-                          {"O", "X", "O"},
-                          {"O", "X", "O"}};
+                          {"X", "O", "O"},
+                          {"X", "X", "O"}};
 
         System.out.println(bruteForce(board));
                           
@@ -15,17 +17,10 @@ public class Pr4{
 
     private static boolean bruteForce(String[][] board){
         //traverse through rows
-        for(String[] row : board){
-            if(row[0].equals(row[1]) && row[1].equals(row[2]))
-                return true;
-        }
+        if( checkRows(board))
+            return true;
 
         // traverse through cols
-        for (int i = 0; i < 3; i++){
-            if(board[0][i].equals(board[1][i])
-                    && board[1][i].equals(board[2][i]))
-                return true;
-        }
 
         // check diagonals
         if(board[0][0].equals(board[1][1])
@@ -38,6 +33,34 @@ public class Pr4{
 
         return false;
 
+    }
+
+    private boolean checkStraight(String[][] board){
+        int count = 0;
+        for(String[] row : board){
+            for(int i = 0; i < row.length-1; i++){
+                if(row[i].equals(row[i+1]))
+                    count++;
+            }
+            if(count == row.length-1)
+                return true;
+            count = 0;
+        }
+        return false;
+    }
+
+    private boolean checkCols(String[][] board){
+        int count = 0;
+        for(int col = 0; col < board[0].length; col++){
+            for(int row = 0; row < board.length-1; row++){
+                if(board[row][col] == board[row+1][col])
+                    count++;
+            }
+            if(count == board[0].length-1)
+                return true;
+            count = 0;
+        }
+        return false;
     }
 
 }
