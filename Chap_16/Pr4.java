@@ -16,11 +16,9 @@ public class Pr4{
     }
 
     private static boolean bruteForce(String[][] board){
-        //traverse through rows
-        if( checkRows(board))
+        //traverse through rows and cols
+        if( checkRows(board) || checkCols(board))
             return true;
-
-        // traverse through cols
 
         // check diagonals
         if(board[0][0].equals(board[1][1])
@@ -35,7 +33,7 @@ public class Pr4{
 
     }
 
-    private boolean checkStraight(String[][] board){
+    private boolean checkRows(String[][] board){
         int count = 0;
         for(String[] row : board){
             for(int i = 0; i < row.length-1; i++){
